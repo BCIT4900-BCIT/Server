@@ -1,0 +1,49 @@
+{% extends 'templates/app.twig' %}
+
+{% block content %}
+<h1>{{ email }} Tasks</h1>
+<div>
+
+                    <form action="{{ path_for('task.taskup')}}" method="GET"> 
+                        <input class="btn btn-info" type = "submit" value ="Add">
+                        <input type="hidden" id="delete" name="delete" value="1">
+                        <input type="hidden" id="email" name="email" value="{{ email }}">
+                        {{ csrf.field | raw }}
+                    </form>
+
+</div>
+<div class="bs-example">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Start</th>
+                <th>End</th>
+                <th colspan="2" align="center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if data %}
+            {% for row in data %}
+            <tr>
+                <td>{{ row.description}}</td>
+                <td>{{ row.start }}</td>
+                <td>{{ row.end }}</td>
+                <td>
+                    <form action="{{ path_for('task.tasklist')}}" method="POST"> 
+                        <input class="btn btn-danger" type = "submit" value ="Delete">
+                        <input type="hidden" id="email" name="email" value="{{ row.email }}">
+                        <input type="hidden" id="id" name="d" value="{{row.description}}">
+                        {{ csrf.field | raw }}
+                    </form>
+                </td>
+            </tr>
+
+            {% endfor %} 
+            {% else %}
+            <p>No records found</p>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}
