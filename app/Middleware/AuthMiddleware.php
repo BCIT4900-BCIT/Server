@@ -2,6 +2,8 @@
 
 namespace App\Middleware;
 
+use App\Models\User;
+
 class AuthMiddleware extends Middleware
 {
 	public function __invoke($request, $response, $next)

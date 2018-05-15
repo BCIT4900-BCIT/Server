@@ -8,24 +8,13 @@ class Auth
 {
     public function user()
     {
-        return User::where('email', $_SESSION['user'] ?? '')->first();
+        $user = User::where('email', $_SESSION['user'] ?? '')->first();
+        return $user;
     }
     
-    /*
     public function check()
     {
         return isset($_SESSION['user']);
-    }
-    */
-    
-    public function check()
-    {
-        $user = User::where('email', $_SESSION['user'] ?? '')->first();
-        if ($user->groupid != null)
-        {
-           return isset($_SESSION['user']); 
-        }
-        return false;
     }
     
     public function attempt($email, $password)
@@ -36,7 +25,7 @@ class Auth
             return false;
         }
         
-        if(password_verify($password, $user->password)) {
+        if(password_verify($password, $user->password) && is_null($user->groupid)) {
             $_SESSION['user'] = $user->email;
             return true;
         }

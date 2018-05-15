@@ -20,6 +20,21 @@ class TaskUpController extends Controller
 
 	public function postTaskUp($request, $response)
 	{
+		/*
+		$validation = $this->validator->validate($request, [
+			'email' => v::notEmpty(),
+			'description' => v::notEmpty(),
+			'start' => v::notEmpty(),
+			'end' => v::notEmpty(),
+		]);
+
+		if ($validation->failed())
+		{
+			$this->flash->addMessage('error', 'All fields required');
+			return $response->withRedirect($this->router->pathFor('task.taskup'));
+		}
+		*/
+
 		$task = Task::create([
 			'email' => $request->getParam('email'),
 			'groupid' => $_SESSION['user'],
