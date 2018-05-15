@@ -18,6 +18,22 @@ class ChildController extends Controller
 	{
 		$current = User::where('email', $_SESSION['user'] ?? '');
 
+		$validation = $this->validator->validate($request, [
+			'email' => v::noWhitespace()->notEmpty()->email(),
+			'password' => v::noWhitespace()->notEmpty(),
+		]);
+
+		if ($validation->failed())
+		{
+			return $response->withRedirect($this->router->pathFor('child.childup'));
+		}
+
+		if (User::where('email', $request->getParam('email'))->first())
+		{
+			$this->flash->addMessage('error', 'Account already in use.');
+			return $response->withRedirect($this->router->pathFor('child.childup'));
+		}
+
 		$user = User::create([
 			'email' => $request->getParam('email'),
 			'groupid' => $_SESSION['user'],

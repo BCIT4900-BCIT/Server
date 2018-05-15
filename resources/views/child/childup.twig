@@ -26,7 +26,8 @@
 						{% endif %}
 					</div>
 
-					<button type="submit" class="btn btn-default">Add Child</button>
+					<button type="submit" class="btn btn-info">Add Child</button>
+					<a href="{{ path_for('child.childlist') }}" class="btn btn-danger">Back</a>
                                         
                                         {{ csrf.field | raw }}
 

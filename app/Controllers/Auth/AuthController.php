@@ -53,6 +53,12 @@ class AuthController extends Controller
 			return $response->withRedirect($this->router->pathFor('auth.signup'));
 		}
 
+        if (User::where('email', $request->getParam('email'))->first())
+        {
+            $this->flash->addMessage('error', 'Account already in use.');
+            return $response->withRedirect($this->router->pathFor('auth.signup'));
+        }
+
 		$user = User::create([
 			'email' => $request->getParam('email'),
 			'password' => password_hash($request->getParam('password'), PASSWORD_DEFAULT),
