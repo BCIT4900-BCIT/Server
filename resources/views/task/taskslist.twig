@@ -1,50 +1,63 @@
 {% extends 'templates/app.twig' %}
 
 {% block content %}
-<h1>{{ email }} Tasks</h1>
-<div>
+    <h1>{{ email }} Tasks</h1>
+    <div>
 
-                    <form action="{{ path_for('task.taskup')}}" method="GET"> 
-                        <input class="btn btn-info" type = "submit" value ="Add">
-                        <input type="hidden" id="delete" name="delete" value="1">
-                        <input type="hidden" id="email" name="email" value="{{ email }}">
-                        {{ csrf.field | raw }}
-                    </form>
+        <form action="{{ path_for('task.taskup')}}" method="GET"> 
+            <input class="btn btn-info" type = "submit" value ="Add">
+            <input type="hidden" id="delete" name="delete" value="1">
+            <input type="hidden" id="email" name="email" value="{{ email }}">
+            {{ csrf.field | raw }}
+        </form>
 
-</div>
-<div class="bs-example">
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>Description</th>
-                <th>Start</th>
-                <th>End</th>
-                <th colspan="2" align="center">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% if data %}
-            {% for row in data %}
-            <tr>
-                <td>{{ row.description}}</td>
-                <td>{{ row.start }}</td>
-                <td>{{ row.end }}</td>
-                <td>
-                    <form action="{{ path_for('task.tasklist')}}" method="POST"> 
-                        <input class="btn btn-danger" type = "submit" value ="Delete">
-                        <input type="hidden" id="email" name="email" value="{{ row.email }}">
-                        <input type="hidden" id="id" name="d" value="{{row.description}}">
-                        {{ csrf.field | raw }}
-                    </form>
-                </td>
-            </tr>
+    </div>
+    <div class="bs-example">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Days</th>
+                    <th>Alarm</th>
+                    <th colspan="2" align="center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if data %}
+                    {% for row in data %}
+                        <tr>
+                            <td>{{ row.description}}</td>
+                            <td>{{ row.start }}</td>
+                            <td>{{ row.end }}</td>
+                            <td>{{ row.monday ? 'Mo' : '' }}
+                                {{ row.tuesday ? ', Tu' : '' }}
+                                {{ row.wednesday ? ', We' : '' }}
+                                {{ row.thursday ? ', Th' : '' }}
+                                {{ row.friday ? ', Fr' : '' }}
+                                {{ row.saturday ? ', Su' : '' }}
+                                {{ row.sunday ? ', Sa' : '' }}
+                            </td>
+                            <td>{{ row.alarm ? 'Yes' : 'No' }}</td>
+                            <td>
+                                <form action="{{ path_for('task.taskslist')}}" method="POST"> 
+                                    <input class="btn btn-danger" type = "submit" value ="Delete">
+                                    <input type="hidden" id="email" name="email" value="{{ row.email }}">
+                                    <input type="hidden" id="description" name="description" value="{{row.description}}">
+                                    <input type="hidden" id="start" name="start" value="{{row.start}}">
+                                    <input type="hidden" id="end" name="end" value="{{row.end}}">
+                                    {{ csrf.field | raw }}
+                                </form>
+                            </td>
+                        </tr>
 
-            {% endfor %} 
-            {% else %}
-            <p>No records found</p>
+                    {% endfor %} 
+                {% else %}
+                <p>No records found</p>
             {% endif %}
-        </tbody>
-    </table>
-    <a href="{{ path_for('child.childlist') }}" class="btn btn-danger">Back</a>
-</div>
+            </tbody>
+        </table>
+        <a href="{{ path_for('child.childlist') }}" class="btn btn-danger">Back</a>
+    </div>
 {% endblock content %}

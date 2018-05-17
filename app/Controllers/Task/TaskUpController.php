@@ -8,45 +8,45 @@ use App\Controllers\Controller;
 use Respect\Validation\Validator as v;
 use Illuminate\Database\Eloquent\Collection;
 
-class TaskUpController extends Controller
-{
+class TaskUpController extends Controller {
 
-	public function getTaskUp($request, $response)
-	{
-		$data = $request->getParam('email');
-		$params = array('data' => $data);
-		return $this->view->render($response, 'task/taskup.twig', $params);
-	}
+    public function getTaskUp($request, $response) {
+        $data = $request->getParam('email');
+        $params = array('data' => $data);
+        return $this->view->render($response, 'task/taskup.twig', $params);
+    }
 
-	public function postTaskUp($request, $response)
-	{
-		/*
-		$validation = $this->validator->validate($request, [
-			'email' => v::notEmpty(),
-			'description' => v::notEmpty(),
-			'start' => v::notEmpty(),
-			'end' => v::notEmpty(),
-		]);
+    public function postTaskUp($request, $response) {
 
-		if ($validation->failed())
-		{
-			$this->flash->addMessage('error', 'All fields required');
-			return $response->withRedirect($this->router->pathFor('task.taskup'));
-		}
-		*/
+          $validation = $this->validator->validate($request, [
+            'description' => v::notEmpty(),
+            'start' => v::notEmpty()->max($request->getParam('end')),
+            'end' => v::notEmpty(),
+        ]);
 
-		$task = Task::create([
-			'email' => $request->getParam('email'),
-			'groupid' => $_SESSION['user'],
-			'description' => $request->getParam('description'),
-			'start' => $request->getParam('start'),
-			'end' => $request->getParam('end'),
-		]);
+          if ($validation->failed()) {
+            $data = $request->getParam('email');
+            $params = array('data' => $data);
+            return $this->view->render($response, 'task/taskup.twig', $params);
+        }
 
-		$email = $this->request->getParam('email');
-		$data = Task::where('email', $email)->get();
-		$params = array('data' => $data, 'email' => $email);
+        $task = Task::create([
+                    'email' => $request->getParam('email'),
+                    'groupid' => $_SESSION['user'],
+                    'description' => $request->getParam('description'),
+                    'start' => $request->getParam('start'),
+                    'end' => $request->getParam('end'),
+                    'monday' => $request->getParam('monday'),
+                    'tuesday' => $request->getParam('tuesday'),
+                    'wednesday' => $request->getParam('wednesday'),
+                    'thursday' => $request->getParam('thursday'),
+                    'friday' => $request->getParam('friday'),
+                    'saturday' => $request->getParam('saturday'),
+                    'sunday' => $request->getParam('sunday'),
+                    'alarm' => $request->getParam('alarm'),
+        ]);
 
-		return $this->view->render($response, 'task/taskslist.twig', $params);
-	}
+        return $response->withRedirect($this->router->pathFor('child.childlist'));
+    }
+
 }

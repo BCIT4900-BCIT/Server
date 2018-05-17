@@ -4,18 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
-{
-	protected $table = 'users';
+class User extends Model {
 
-	protected $fillable = [
-		'email',
-		'groupid',
-		'password',
-	];
+    protected $table = 'users';
+    protected $fillable = [
+        'email',
+        'groupid',
+        'password',
+    ];
 
-	public function tasks()
-	{
-		return $this->hasMany('Task');
-	}
+    public function tasks() {
+        return $this->hasMany('Task');
+    }
+
 }

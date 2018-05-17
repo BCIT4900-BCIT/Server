@@ -2,49 +2,80 @@
 
 {% block content %}
 
-	<div class="row">
-		<div class="col-md-6 col-md-offset-3">
-			<div class="panel panel-default">
-				<div class="panel-heading">Add Task
-				</div>
-				<div class="panel-body">
-					<form action="{{ path_for('task.taskup') }}" method="post" autocomplete="off">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">Add Task
+                </div>
+                <div class="panel-body">
+                    <form action="{{ path_for('task.taskup') }}" method="post" autocomplete="off">
 
-					<div class="form-group">
-						<label for="description">Description</label>
-						<input type="text" name="description" id="description" placeholder="Describe the task" class="form-control">
-					</div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <input type="text" name="description" id="description" placeholder="Describe the task" class="form-control">
+                        </div>
 
-					<div class="form-group clockpicker" data-placement="left" data-align="top" data-donetext="Done" data-twelvehour="false" data-autoclose="true">
-						<label for="start">Start Time</label>
-					    <input type="text" name="start" id="start" class="form-control" value="">
-					</div>
+                        <div class="form-group clockpicker" data-placement="left" data-align="top" data-donetext="Done" data-twelvehour="false" data-autoclose="true">
+                            <label for="start">Start Time</label>
+                            <input type="text" name="start" id="start" class="form-control" value="">
+                        </div>
 
-					<div class="form-group clockpicker" data-placement="left" data-align="top" data-donetext="Done" data-twelvehour="false" data-autoclose="true">
-						<label for="end">End Time</label>
-					    <input type="text" name="end" id="end" class="form-control" value="">
-					</div>
-					<!--
-					<div class="form-group">
-						<label for="start">Start Time</label>
-						<input type="text" name="start" id="start" placeholder="xxxxxx" class="form-control">
-					</div>
+                        <div class="form-group clockpicker" data-placement="left" data-align="top" data-donetext="Done" data-twelvehour="false" data-autoclose="true">
+                            <label for="end">End Time</label>
+                            <input type="text" name="end" id="end" class="form-control" value="">
+                        </div>
 
-					<div class="form-group">
-						<label for="end">End Time</label>
-						<input type="text" name="end" id="end" placeholder="xxxxxx" class="form-control">
-					</div>
-					-->
-					<input type="hidden" id="email" name="email" value="{{ data }}">
+                        <div class="form-check form-check-inline">
+                            <label for="monday">Mon</label>
+                            <input type="hidden" name="monday" value="0" />
+                            <input type="checkbox" name="monday" value="1" />
 
-					<button type="submit" class="btn btn-info">Add Task</button>
-					<a href="{{ path_for('child.childlist') }}" class="btn btn-danger">Back</a>
-                                        
-                                        {{ csrf.field | raw }}
+                            <label for="tuesday">Tue</label>
 
-				</div
-			</div>
-		</div>
-	</div>
+                            <input type="hidden" name="tuesday" value="0" />
+                            <input type="checkbox" name="tuesday" value="1" />
+
+                            <label for="wednesday">Wed</label>
+
+                            <input type="hidden" name="wednesday" value="0" />
+                            <input type="checkbox" name="wednesday" value="1" />
+
+                            <label for="thursday">Thu</label>
+
+                            <input type="hidden" name="thursday" value="0" />
+                            <input type="checkbox" name="thursday" value="1" />
+
+                            <label for="friday">Fri</label>
+
+                            <input type="hidden" name="friday" value="0" />
+                            <input type="checkbox" name="friday" value="1" />
+
+                            <label for="saturday">Sat</label>
+
+                            <input type="hidden" name="saturday" value="0" />
+                            <input type="checkbox" name="saturday" value="1" />
+
+                            <label for="sunday">Sun</label>
+
+                            <input type="hidden" name="sunday" value="0" />
+                            <input type="checkbox" name="sunday" value="1" />
+
+                            <label for="alarm">Alarm</label>
+
+                            <input type="hidden" name="alarm" value="0" />
+                            <input type="checkbox" name="alarm" value="1" />
+
+                        </div>
+
+                        <input type="hidden" id="email" name="email" value="{{ data }}">
+
+                        <button type="submit" class="btn btn-info">Add Task</button>
+                        <a href="{{ path_for('child.childlist') }}" class="btn btn-danger">Back</a>
+                        {{ csrf.field | raw }}
+                    </form>
+                </div
+            </div>
+        </div>
+    </div>
 
 {% endblock %}

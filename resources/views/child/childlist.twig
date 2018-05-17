@@ -1,50 +1,44 @@
 {% extends 'templates/app.twig' %}
 
 {% block content %}
-<h1>Your Children</h1>
-<div><a href="{{ path_for('child.childup') }}" class="btn btn-info">Add Child</a></div>
-<div class="bs-example">
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>Email</th>
-                <th colspan="2" align="center">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% if data %}
-            {% for row in data %}
-            <tr>
-                <td>{{ row.email }}</td>
+    <h1>Your Children</h1>
+    <div><a href="{{ path_for('child.childup') }}" class="btn btn-info">Add Child</a></div>
+    <div class="bs-example">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Email</th>
+                    <th colspan="2" align="center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if data %}
+                    {% for row in data %}
+                        <tr>
+                            <td>{{ row.email }}</td>
+                            <td><form action="{{ path_for('task.taskslist')}}" method="GET"> 
+                                    <input class="btn btn-standard" type = "submit" value ="Tasks">
+                                    <input type="hidden" id="email" name="email" value="{{row.email}}">
+                                    {{ csrf.field | raw }}
+                                </form></td>
+                            <td> 
+                            <td>
 
-                {# <td><a href="{{ path_for('child.childedit', { 'id' : row.id })}}" class="btn btn-info">Edit</a></td>
-                <td>  #}
-                <td><form action="{{ path_for('task.taskslist')}}" method="POST"> 
-                        <input class="btn btn-standard" type = "submit" value ="Tasks">
-                        <input type="hidden" id="tasks" name="tasks" value="1">
-                        <input type="hidden" id="id" name="d" value="{{row.email}}">
-                        
-                        {{ csrf.field | raw }}
-                    </form></td>
-                <td> 
-                <td>
-                	
-                    <form action="{{ path_for('child.childlist')}}" method="POST"> 
-                        <input class="btn btn-danger" type = "submit" value ="Delete">
-                        <input type="hidden" id="delete" name="delete" value="1">
-                        <input type="hidden" id="id" name="d" value="{{row.email}}">
-                        
-                        {{ csrf.field | raw }}
-                    </form>
-                </td>
-            </tr>
+                                <form action="{{ path_for('child.childlist')}}" method="POST"> 
+                                    <input class="btn btn-danger" type = "submit" value ="Delete">
+                                    <input type="hidden" id="email" name="email" value="{{row.email}}">
 
-            {% endfor %} 
-            {% else %}
-            <p>No records found</p>
+                                    {{ csrf.field | raw }}
+                                </form>
+                            </td>
+                        </tr>
+
+                    {% endfor %} 
+                {% else %}
+                <p>No records found</p>
             {% endif %}
 
-        </tbody>
-    </table>
-</div>
+            </tbody>
+        </table>
+    </div>
 {% endblock content %}
