@@ -2,7 +2,13 @@
 
 {% block content %}
     <h1>Your Children</h1>
-    <div><a href="{{ path_for('child.childup') }}" class="btn btn-info">Add Child</a></div>
+    <div><a href="{{ path_for('child.childup') }}" class="btn btn-info">Add Child</a>
+    </div>
+    <div><form action="{{ path_for('task.taskslist')}}" method="GET"> 
+                                    <input class="btn btn-standard" type = "submit" value ="View Tasks">
+                                    <input type="hidden" id="email" name="email" value="{{row.email}}">
+                                    {{ csrf.field | raw }}
+                                </form></div>
     <div class="bs-example">
         <table class="table table-hover">
             <thead>
@@ -16,12 +22,13 @@
                     {% for row in data %}
                         <tr>
                             <td>{{ row.email }}</td>
-                            <td><form action="{{ path_for('task.taskslist')}}" method="GET"> 
-                                    <input class="btn btn-standard" type = "submit" value ="Tasks">
+                            <td><form action="{{ path_for('task.taskup')}}" method="GET"> 
+                                    <input class="btn btn-standard" type = "submit" value ="Add">
                                     <input type="hidden" id="email" name="email" value="{{row.email}}">
                                     {{ csrf.field | raw }}
-                                </form></td>
-                            <td> 
+                                </form>
+
+                            </td>
                             <td>
 
                                 <form action="{{ path_for('child.childlist')}}" method="POST"> 

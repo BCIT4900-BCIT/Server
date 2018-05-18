@@ -13,9 +13,9 @@ class TasksController extends Controller {
     //Populate task list
     public function getTasksList($request, $response) {
 
-        $email = $this->request->getParam('email');
-        $data = Task::where('email', $email)->orderBy('start', 'ASC')->orderBy('end', 'ASC')->get();
-        $params = array('data' => $data, 'email' => $email);
+
+        $data = Task::orderBy('email')->orderBy('description')->orderBy('day')->orderBy('start')->get();
+        $params = array('data' => $data);
 
         return $this->view->render($response, 'task/taskslist.twig', $params);
     }
@@ -25,15 +25,16 @@ class TasksController extends Controller {
         $description = $this->request->getParam('description');
         $start = $this->request->getParam('start');
         $end = $this->request->getParam('end');
+        $day = $this->request->getParam('day');
         /*
           $description = $this->request->getParam('d');
           $task = Task::where('description', $description)->delete();
          */
 
-        $task = Task::where('email', $email)->where('description', $description)->where('start', $start)->where('end', $end)->delete();
+        $task = Task::where('email', $email)->where('description', $description)->where('start', $start)->where('end', $end)->where('day', $day)->delete();
 
-        $data = Task::where('email', $email)->get();
-        $params = array('data' => $data, 'email' => $email);
+        $data = Task::where('groupid', $_SESSION['user'])->orderBy('email')->orderBy('description')->orderBy('day')->get();
+        $params = array('data' => $data);
 
         return $this->view->render($response, 'task/taskslist.twig', $params);
     }

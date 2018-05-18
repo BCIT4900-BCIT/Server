@@ -30,21 +30,102 @@ class TaskUpController extends Controller {
             return $this->view->render($response, 'task/taskup.twig', $params);
         }
 
-        $task = Task::create([
+        if ($request->getParam('monday'))
+        {
+            $task = Task::create([
                     'email' => $request->getParam('email'),
                     'groupid' => $_SESSION['user'],
                     'description' => $request->getParam('description'),
                     'start' => $request->getParam('start'),
                     'end' => $request->getParam('end'),
-                    'monday' => $request->getParam('monday'),
-                    'tuesday' => $request->getParam('tuesday'),
-                    'wednesday' => $request->getParam('wednesday'),
-                    'thursday' => $request->getParam('thursday'),
-                    'friday' => $request->getParam('friday'),
-                    'saturday' => $request->getParam('saturday'),
-                    'sunday' => $request->getParam('sunday'),
+                    'day' => 0,
+                    'alarm' => $request->getParam('alarm'),
+            ]);
+        }
+
+        if ($request->getParam('tuesday'))
+        {
+            
+            $task = Task::create([
+                    'email' => $request->getParam('email'),
+                    'groupid' => $_SESSION['user'],
+                    'description' => $request->getParam('description'),
+                    'start' => $request->getParam('start'),
+                    'end' => $request->getParam('end'),
+                    'day' => 1,
                     'alarm' => $request->getParam('alarm'),
         ]);
+        }
+
+        if ($request->getParam('wednesday'))
+        {
+            $task = Task::create([
+                    'email' => $request->getParam('email'),
+                    'groupid' => $_SESSION['user'],
+                    'description' => $request->getParam('description'),
+                    'start' => $request->getParam('start'),
+                    'end' => $request->getParam('end'),
+                    'day' => 2,
+                    'alarm' => $request->getParam('alarm'),
+        ]);
+            
+        }
+
+        if ($request->getParam('thursday'))
+        {
+            $task = Task::create([
+                    'email' => $request->getParam('email'),
+                    'groupid' => $_SESSION['user'],
+                    'description' => $request->getParam('description'),
+                    'start' => $request->getParam('start'),
+                    'end' => $request->getParam('end'),
+                    'day' => 3,
+                    'alarm' => $request->getParam('alarm'),
+        ]);
+            
+        }
+
+        if ($request->getParam('friday'))
+        {
+            $task = Task::create([
+                    'email' => $request->getParam('email'),
+                    'groupid' => $_SESSION['user'],
+                    'description' => $request->getParam('description'),
+                    'start' => $request->getParam('start'),
+                    'end' => $request->getParam('end'),
+                    'day' => 4,
+                    'alarm' => $request->getParam('alarm'),
+        ]);
+            
+        }
+
+        if ($request->getParam('saturday'))
+        {
+            $task = Task::create([
+                    'email' => $request->getParam('email'),
+                    'groupid' => $_SESSION['user'],
+                    'description' => $request->getParam('description'),
+                    'start' => $request->getParam('start'),
+                    'end' => $request->getParam('end'),
+                    'day' => 5,
+                    'alarm' => $request->getParam('alarm'),
+            ]);
+        }
+
+        if ($request->getParam('sunday'))
+        {
+            $task = Task::create([
+                    'email' => $request->getParam('email'),
+                    'groupid' => $_SESSION['user'],
+                    'description' => $request->getParam('description'),
+                    'start' => $request->getParam('start'),
+                    'end' => $request->getParam('end'),
+                    'day' => 6,
+                    'alarm' => $request->getParam('alarm'),
+        ]);
+            
+        }
+
 
         return $response->withRedirect($this->router->pathFor('child.childlist'));
     }

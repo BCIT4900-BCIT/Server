@@ -13,13 +13,7 @@ class Task extends Model {
         'description',
         'start',
         'end',
-        'monday',
-        'tuesday',
-        'wednesday',
-        'thursday',
-        'friday',
-        'saturday',
-        'sunday',
+        'day',
         'alarm',
     ];
 
