@@ -4,15 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Task extends Model
-{
-	protected $table = 'tasks';
+class Task extends Model {
 
-	protected $fillable = [
-		'email',
-		'groupid',
-		'description',
-		'start',
-		'end',
-	];
+    protected $table = 'tasks';
+    protected $fillable = [
+        'email',
+        'groupid',
+        'description',
+        'start',
+        'end',
+        'day',
+        'alarm',
+    ];
+
 }

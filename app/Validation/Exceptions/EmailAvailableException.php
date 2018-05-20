@@ -2,13 +2,13 @@
 
 namespace App\Validation\Exceptions;
 
-use Respect\Validation\Exception\ValidationException;
+use Respect\Validation\Exceptions\ValidationException;
 
-class EmailAvailableException
+class EmailAvailableException extends ValidationException
 {
 	public static $defaultTemplates = [
-		self::MODE_DEFAULT = [
+		self::MODE_DEFAULT => [
 			self::STANDARD => 'Email is taken.',
-		];
+		],
 	];
 }

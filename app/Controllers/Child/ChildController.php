@@ -7,50 +7,46 @@ use App\Controllers\Controller;
 use Respect\Validation\Validator as v;
 use Illuminate\Database\Eloquent\Collection;
 
-class ChildController extends Controller
-{
-	public function getChildUp($request, $response)
-	{
-		return $this->view->render($response, 'child/childup.twig');
-	}
+class ChildController extends Controller {
 
-	public function postChildUp($request, $response)
-	{
-		$current = User::where('email', $_SESSION['user'] ?? '');
+    public function getChildUp($request, $response) {
+        return $this->view->render($response, 'child/childup.twig');
+    }
 
-		$user = User::create([
-			'email' => $request->getParam('email'),
-			'groupid' => $_SESSION['user'],
-			'password' => password_hash($request->getParam('password'), PASSWORD_DEFAULT),
-		]);
+    public function postChildUp($request, $response) {
+        $validation = $this->validator->validate($request, [
+            'email' => v::noWhitespace()->notEmpty()->email()->emailAvailable(),
+            'password' => v::noWhitespace()->notEmpty(),
+        ]);
 
-		//$this->flash->addMessage('info', 'Child added');
+        if ($validation->failed()) {
+            return $response->withRedirect($this->router->pathFor('child.childup'));
+        }
 
-		$data = User::where('groupid', $_SESSION['user'])->get();
-		$params = array('data' => $data);
+        $user = User::create([
+                    'email' => $request->getParam('email'),
+                    'groupid' => $_SESSION['user'],
+                    'password' => $request->getParam('password'),
+        ]);
 
-		return $this->view->render($response, 'child/childlist.twig', $params);
-	}
+        return $response->withRedirect($this->router->pathFor('child.childlist'));
+    }
 
-	public function getChildList($request, $response)
-	{
-		$data = User::where('groupid', $_SESSION['user'] ?? '')->get();
-		$params = array('data' => $data);
+    public function getChildList($request, $response) {
+        $data = User::where('groupid', $_SESSION['user'] ?? '')->get();
+        $params = array('data' => $data);
 
-		return $this->view->render($response, 'child/childlist.twig', $params);
-	}
+        return $this->view->render($response, 'child/childlist.twig', $params);
+    }
 
-	public function postChildList($request, $response)
-	{
-		$email = $this->request->getParam('d');
-		$user = User::where('email', $email)->delete();
+    public function postChildList($request, $response) {
+        $email = $this->request->getParam('email');
+        $user = User::where('email', $email)->delete();
 
         $data = User::where('groupid', $_SESSION['user'] ?? '')->get();
-		$params = array('data' => $data);
+        $params = array('data' => $data);
 
-		return $this->view->render($response, 'child/childlist.twig', $params);
-
-	}
-
+        return $this->view->render($response, 'child/childlist.twig', $params);
+    }
 
 }

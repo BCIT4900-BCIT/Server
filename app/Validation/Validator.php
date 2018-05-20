@@ -5,27 +5,25 @@ namespace App\Validation;
 use Respect\Validation\Validator as Respect;
 use Respect\Validation\Exceptions\NestedValidationException;
 
-class Validator
-{
-	public function validate($request, array $rules)
-	{
-		foreach ($rules as $field => $rule) {
-			try {
+class Validator {
 
-				$rule->setName(ucfirst($field))->assert($request->getParam($field));
+    public function validate($request, array $rules) {
+        foreach ($rules as $field => $rule) {
+            try {
 
-			} catch (NestedValidationException $e) {
-				$this->errors[$field] = $e->getMessages();
-			}
-		}
+                $rule->setName(ucfirst($field))->assert($request->getParam($field));
+            } catch (NestedValidationException $e) {
+                $this->errors[$field] = $e->getMessages();
+            }
+        }
 
-		$_SESSION['errors'] = $this->errors;
+        $_SESSION['errors'] = $this->errors;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function failed()
-	{
-		return !empty($this->errors);
-	}
+    public function failed() {
+        return !empty($this->errors);
+    }
+
 }

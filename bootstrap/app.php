@@ -7,20 +7,20 @@ session_start();
 require __DIR__ . '/../vendor/autoload.php';
 
 $app = new \Slim\App([
-	'settings' => [
-		'displayErrorDetails' => true,
-		'db' => [
-			'driver' => 'mysql',
-			'host' => 'localhost',
-			'database' => 'app',
-			'username' => 'root',
-			'password' => '',
-			'charset' => 'utf8',
-			'collation' => 'utf8_unicode_ci',
-			'prefix' => '',
-		]
-	],
-]);
+    'settings' => [
+        'displayErrorDetails' => true,
+        'db' => [
+            'driver' => 'mysql',
+            'host' => 'localhost',
+            'database' => 'app',
+            'username' => 'root',
+            'password' => '',
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix' => '',
+        ]
+    ],
+        ]);
 
 $container = $app->getContainer();
 
@@ -30,7 +30,7 @@ $capsule->setAsGlobal();
 $capsule->bootEloquent();
 
 $container['db'] = function($container) use ($capsule) {
-	return $capsule;
+    return $capsule;
 };
 
 $container['auth'] = function ($container) {
@@ -42,50 +42,45 @@ $container['flash'] = function ($container) {
 };
 
 $container['view'] = function($container) {
-	$view = new \Slim\Views\Twig(__DIR__ . '/../resources/views', [
-		'cache' => false,
-	]);
+    $view = new \Slim\Views\Twig(__DIR__ . '/../resources/views', [
+        'cache' => false,
+    ]);
 
-	$view->addExtension(new \Slim\Views\TwigExtension(
-		$container->router,
-		$container->request->getUri()
-	));
-        
-        $view->getEnvironment()->addGlobal('auth', [
-            'check' => $container->auth->check(),
-            'user' => $container->auth->user()
-        ]);
-        
-        $view->getEnvironment()->addGlobal('flash', $container->flash);
-	return $view;
+    $view->addExtension(new \Slim\Views\TwigExtension(
+            $container->router, $container->request->getUri()
+    ));
+
+    $view->getEnvironment()->addGlobal('auth', [
+        'check' => $container->auth->check(),
+        'user' => $container->auth->user()
+    ]);
+
+    $view->getEnvironment()->addGlobal('flash', $container->flash);
+    return $view;
 };
 
 $container['HomeController'] = function($container) {
-	return new \App\Controllers\HomeController($container);
+    return new \App\Controllers\HomeController($container);
 };
 
 $container['validator'] = function($container) {
-	return new App\Validation\Validator;
+    return new App\Validation\Validator;
 };
 
 $container['AuthController'] = function($container) {
-	return new \App\Controllers\Auth\AuthController($container);
+    return new \App\Controllers\Auth\AuthController($container);
 };
 
 $container['ChildController'] = function($container) {
-	return new \App\Controllers\Child\ChildController($container);
+    return new \App\Controllers\Child\ChildController($container);
 };
 
 $container['TasksController'] = function($container) {
-	return new \App\Controllers\Task\TasksController($container);
-};
-
-$container['TaskController'] = function($container) {
-	return new \App\Controllers\Task\TaskController($container);
+    return new \App\Controllers\Task\TasksController($container);
 };
 
 $container['TaskUpController'] = function($container) {
-	return new \App\Controllers\Task\TaskUpController($container);
+    return new \App\Controllers\Task\TaskUpController($container);
 };
 
 $container['csrf'] = function ($container) {
