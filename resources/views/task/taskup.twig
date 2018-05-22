@@ -15,14 +15,16 @@
                             <input type="text" name="description" id="description" placeholder="Describe the task" class="form-control">
                         </div>
 
-                        <div class="form-group clockpicker" data-placement="left" data-align="top" data-donetext="Done" data-twelvehour="false" data-autoclose="true">
-                            <label for="start">Start Time</label>
-                            <input type="text" name="start" id="start" class="form-control" value="">
+                        <label for="start">Start Time</label>
+                        <div class="input-group bootstrap-timepicker timepicker">
+                            <input id="timepicker1" name="start" type="text" class="form-control input-small">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
                         </div>
 
-                        <div class="form-group clockpicker" data-placement="left" data-align="top" data-donetext="Done" data-twelvehour="false" data-autoclose="true">
-                            <label for="end">End Time</label>
-                            <input type="text" name="end" id="end" class="form-control" value="">
+                        <label for="end">End Time</label>
+                        <div class="input-group bootstrap-timepicker timepicker">
+                            <input id="timepicker2" name="end" type="text" class="form-control input-small">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
                         </div>
 
                         <div class="form-check form-check-inline">

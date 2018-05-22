@@ -8,14 +8,35 @@ use App\Controllers\Controller;
 use Respect\Validation\Validator as v;
 use Illuminate\Database\Eloquent\Collection;
 
+/**
+ * The controller for the task actions.
+ * 
+ * @author Michael Navarro
+ */
 class TaskUpController extends Controller {
 
+    /**
+     * Returns taskup.twig
+     * 
+     * @param type $request
+     * @param type $response
+     * @return view
+     */
     public function getTaskUp($request, $response) {
         $data = $request->getParam('email');
         $params = array('data' => $data);
         return $this->view->render($response, 'task/taskup.twig', $params);
     }
 
+    /**
+     * Validates a task creation form and adds a task to the database
+     * and returns to childlist.twig upon success, or returns taskup.twig
+     * upon failure.
+     * 
+     * @param type $request
+     * @param type $response
+     * @return view
+     */
     public function postTaskUp($request, $response) {
 
           $validation = $this->validator->validate($request, [
